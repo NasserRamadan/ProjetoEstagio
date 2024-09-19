@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentual de Representação por Estado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Percentual de Representação por Estado</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Estado</th>
+                <th>Faturamento (R$)</th>
+                <th>Percentual (%)</th>
+            </tr>
+        </thead>
+        <tbody id="resultado">
+            <tr>
+                <td colspan="3">Carregando dados...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+
+        const faturamentoPorEstado = {
+            "SP": 67836.43,
+            "RJ": 36678.66,
+            "MG": 29229.88,
+            "ES": 27165.48,
+            "Outros": 19849.53
+        };
+
+
+        function calcularPercentuais(faturamentoPorEstado) {
+            
+            const valorTotal = Object.values(faturamentoPorEstado).reduce((acc, valor) => acc + valor, 0);
+
+
+            const percentuais = {};
+            for (const estado in faturamentoPorEstado) {
+                const valor = faturamentoPorEstado[estado];
+                percentuais[estado] = (valor / valorTotal * 100).toFixed(2);
+            }
+
+            return percentuais;
+        }
+
+
+        function exibirResultados() {
+            const percentuais = calcularPercentuais(faturamentoPorEstado);
+            const resultadoElement = document.getElementById('resultado');
+            resultadoElement.innerHTML = '';
+
+
+            for (const estado in faturamentoPorEstado) {
+                const valor = faturamentoPorEstado[estado];
+                const percentual = percentuais[estado];
+                resultadoElement.innerHTML += `
+                    <tr>
+                        <td>${estado}</td>
+                        <td>R$ ${valor.toFixed(2)}</td>
+                        <td>${percentual}%</td>
+                    </tr>
+                `;
+            }
+        }
+
+        exibirResultados();
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Fibonacci</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #5cb85c;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        #resultado {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verificar se um número está na sequência de Fibonacci</h1>
+        <form id="fibonacciForm">
+            <label for="numero">Digite um número:</label>
+            <input type="number" id="numero" name="numero" required>
+            <button type="submit">Verificar</button>
+        </form>
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        function isFibonacci(n) {
+            if (n < 0) return false;
+            
+            let fibA = 0, fibB = 1;
+            
+            if (n === fibA || n === fibB) return true;
+            
+            while (fibB < n) {
+                let temp = fibA + fibB;
+                fibA = fibB;
+                fibB = temp;
+            }
+
+            return fibB === n;
+        }
+
+        document.getElementById('fibonacciForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const numero = parseInt(document.getElementById('numero').value);
+            const resultado = document.getElementById('resultado');
+            
+            if (isFibonacci(numero)) {
+                resultado.textContent = `O número ${numero} pertence à sequência de Fibonacci.`;
+                resultado.style.color = "green";
+            } else {
+                resultado.textContent = `O número ${numero} não pertence à sequência de Fibonacci.`;
+                resultado.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>
